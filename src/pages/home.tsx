@@ -1,5 +1,16 @@
-const HomePage = () => {
-    return <div className="font-extrabold text-4xl text-blue-700">Home Page</div>
-}
+import { useAuthStore } from "../stores/auth";
 
-export default HomePage
+const HomePage = () => {
+  const user = useAuthStore((state) => state.user);
+
+  return (
+    <div className="font-extrabold">
+      <div className="flex gap-1 items-end">
+        <span>Hello, </span>
+        <span className="text-blue-700 text-xl">{user!.attributes.email}</span>
+      </div>
+    </div>
+  );
+};
+
+export default HomePage;
