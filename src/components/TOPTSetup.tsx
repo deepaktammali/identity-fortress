@@ -1,6 +1,7 @@
-import { MFA_METHOD } from "@/constants/amplify";
+import { COGNITO_ATTRIBUTES, MFA_METHOD } from "@/constants/amplify";
 import useSetPreferredMFAMutation from "@/hooks/use-set-preferred-mfa-mutation";
 import useSetupTOPTAuthCode from "@/hooks/use-setup-topt-auth-code-query";
+import useUpdateUserAttributeMutation from "@/hooks/use-update-user-attribute-mutation";
 import useVerifyTOTPAuthCodeMutation from "@/hooks/use-verify-totp-auth-code-mutation";
 import { useAuthStore } from "@/stores/auth";
 import { Button, LoadingSpinner, Notification } from "hds-react";
@@ -24,6 +25,8 @@ const TOPTSetup = ({ className, onSuccess, onCancel }: Props) => {
   } = useSetupTOPTAuthCode();
   const verifyTOTPAuthCodeMutation = useVerifyTOTPAuthCodeMutation();
   const setUserPreferredMfaMutation = useSetPreferredMFAMutation();
+  const updateUserAttributesMutation = useUpdateUserAttributeMutation();
+
   const user = useAuthStore((state) => state.user);
 
   const [challengeAnswer, setChallengerAnswer] = useState<string>("");
@@ -48,6 +51,15 @@ const TOPTSetup = ({ className, onSuccess, onCancel }: Props) => {
       toast.success("Set TOTP as preferred two factor method");
       // Call onSuccess method
       onSuccess();
+
+      // use a custom attribute to know whether the user has software mfa configured
+      if (user?.attributes["custom:soft_mfa_configured"] !== "true") {
+        await updateUserAttributesMutation.mutateAsync({
+          attributes: {
+            [COGNITO_ATTRIBUTES.SOFTWARE_MFA_CONFIGURED]: "true",
+          },
+        });
+      }
     } catch (error) {
       console.error(error);
       if (error instanceof Error) {
@@ -72,9 +84,7 @@ const TOPTSetup = ({ className, onSuccess, onCancel }: Props) => {
   }?${qrCodeSearchParams.toString()}`;
 
   return (
-    <div
-      className={twMerge("w-full flex flex-col gap-5 bg-gray-50", className)}
-    >
+    <div className={twMerge("w-full flex flex-col gap-5", className)}>
       <div className="flex flex-col gap-2">
         <h3 className="text-lg font-medium">Setup Authenticator App</h3>
         <span className="text-gray-500">
@@ -86,8 +96,8 @@ const TOPTSetup = ({ className, onSuccess, onCancel }: Props) => {
           </Balancer>
         </span>
       </div>
-      <div className="flex flex-col gap-3 border-b border-b-gray-300 pb-4">
-        <span className="text-zinc-950 font-medium">
+      <div className="flex flex-col gap-3 pb-4 border-b border-b-gray-300">
+        <span className="font-medium text-zinc-950">
           Scan the code with an authenticator app
         </span>
         <div>
@@ -105,7 +115,7 @@ const TOPTSetup = ({ className, onSuccess, onCancel }: Props) => {
                 app manually.
               </span>
               <div className="flex flex-col gap-2">
-                <label htmlFor="code" className="font-semibold text-sm">
+                <label htmlFor="code" className="text-sm font-semibold">
                   Enter code here
                 </label>
                 <input
@@ -125,7 +135,7 @@ const TOPTSetup = ({ className, onSuccess, onCancel }: Props) => {
           )}
         </div>
       </div>
-      <div className="flex w-full gap-2 justify-end">
+      <div className="flex justify-end w-full gap-2">
         <Button variant="danger" onClick={handleCancel}>
           Cancel
         </Button>

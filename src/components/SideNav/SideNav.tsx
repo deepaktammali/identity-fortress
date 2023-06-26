@@ -1,8 +1,10 @@
-interface Props {}
+interface Props {
+  className?: string;
+}
 
-const SideNav = ({ children }: React.PropsWithChildren<Props>) => {
+const SideNav = ({ children, className }: React.PropsWithChildren<Props>) => {
   return (
-    <nav>
+    <nav className={className}>
       <ul>{children}</ul>
     </nav>
   );

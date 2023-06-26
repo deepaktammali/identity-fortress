@@ -1,4 +1,4 @@
-import SMSSetup from "@/components/SMSSetup";
+import SMSSetup from "@/components/SMSSetup/SMSSetup";
 import TOPTSetup from "@/components/TOPTSetup";
 import { MFA_METHOD } from "@/constants/amplify";
 import { Button } from "hds-react";
@@ -25,7 +25,7 @@ const availableMFAOptions: MFAOption[] = [
   {
     label: "SMS Authentication",
     slug: "sms-based",
-    mfaMethod: MFA_METHOD.SMS,
+    mfaMethod: MFA_METHOD.SMS_MFA,
     description:
       "An authentication system that sends temporary codes via text messages for added security.",
   },
@@ -48,12 +48,18 @@ const Setup = ({}: Props) => {
           <TOPTSetup
             onSuccess={navigateToAuthenticationSettings}
             onCancel={navigateToAuthenticationSettings}
-            className="max-w-6xl py-4 px-5 border border-gray-200"
+            className="w-full"
           />
         );
       }
-      case MFA_METHOD.SMS: {
-        return <SMSSetup />;
+      case MFA_METHOD.SMS_MFA: {
+        return (
+          <SMSSetup
+            className="w-full"
+            onSuccess={navigateToAuthenticationSettings}
+            onCancel={navigateToAuthenticationSettings}
+          />
+        );
       }
     }
   }, [selectedMFAOptionIdx]);
@@ -61,7 +67,11 @@ const Setup = ({}: Props) => {
   return (
     <div className="flex flex-col gap-8">
       {/* Setup Element */}
-      <div className="flex flex-col items-center">{SetupElement}</div>
+      <div className="flex flex-col items-center">
+        <div className="max-w-6xl py-4 px-5 border border-gray-200 bg-gray-50">
+          {SetupElement}
+        </div>
+      </div>
 
       <div className="flex flex-col gap-4">
         <span className="font-medium text-zinc-600">
@@ -76,7 +86,7 @@ const Setup = ({}: Props) => {
             return (
               <li
                 key={mfaOption.slug}
-                className="flex justify-between w-full border border-gray-200 bg-gray-50 px-3 py-2"
+                className="flex justify-between sm:flex-row flex-col gap-2 sm:gap-1 w-full border border-gray-200 bg-gray-50 px-3 py-2"
               >
                 <div className="flex flex-col gap-1">
                   <span className="font-medium">{mfaOption.label}</span>

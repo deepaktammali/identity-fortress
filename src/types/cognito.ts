@@ -13,4 +13,6 @@ export type CognitoUserAttributes = {
   family_name: string;
   email: string;
   picture: string;
+  phone_number: string;
+  "custom:soft_mfa_configured": "true" | "false"
 };

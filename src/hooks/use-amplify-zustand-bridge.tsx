@@ -20,7 +20,7 @@ const useAmplifyZustandBridge = () => {
 
       const authUser: AuthStoreUser = {
         attributes,
-        preferredMFA: user.preferredMFA,
+        preferredMFA: user.preferredMFA || (user as any).challengeName,
         username: user.username,
       };
 
@@ -37,7 +37,6 @@ const useAmplifyZustandBridge = () => {
     const initiateAuthState = async () => {
       try {
         const user = await getCurrentAuthenticatedUser();
-        console.log(user);
         if (user) {
           handleUserSignIn({ user });
         } else {
@@ -55,7 +54,7 @@ const useAmplifyZustandBridge = () => {
   }, [handleUserSignIn, handleUserSignOut]);
 
   useEffect(() => {
-    const hubListenerCancelToken = Hub.listen("auth", (data) => {
+    const hubListenerCancelToken = Hub.listen("auth", async (data) => {
       const { payload } = data;
 
       console.log(payload);
@@ -70,6 +69,12 @@ const useAmplifyZustandBridge = () => {
         case HUB_EVENTS.AUTH.signOut: {
           handleUserSignOut();
           break;
+        }
+        case HUB_EVENTS.AUTH.tokenRefresh: {
+          const user = await getCurrentAuthenticatedUser();
+          handleUserSignIn({
+            user: user,
+          });
         }
       }
     });

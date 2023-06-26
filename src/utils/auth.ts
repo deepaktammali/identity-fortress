@@ -1,4 +1,4 @@
-import { Auth } from "@aws-amplify/auth";
+import { Auth, CognitoUser } from "@aws-amplify/auth";
 
 export type LogInUserParams = {
     email: string;
@@ -86,4 +86,28 @@ const verifyTotpToken = async (params: VerifyTotpTokenParams) => {
     return response;
 }
 
-export { confirmUser, getCurrentAuthenticatedUser, getCurrentUserPreferredMfa, logInUser, logOutUser, registerUser, setPreferredMFA, getTOTPSetupAuthorizationCode, verifyTotpToken };
+export interface UpdateCognitoUserAttributesParams {
+    attributes: Record<string, string>
+}
+
+const updateAmplifyUserAttributeParams = async (params: UpdateCognitoUserAttributesParams) => {
+    const { attributes } = params;
+    const user = await Auth.currentAuthenticatedUser();
+    const response = await Auth.updateUserAttributes(user, attributes);
+    return response;
+}
+
+export interface CompleteMFAChallengeParams {
+    user: CognitoUser;
+    code: string;
+    mfaMethod: "SMS_MFA" | "SOFTWARE_TOKEN_MFA";
+}
+
+const completeMFAChallenge = async (params: CompleteMFAChallengeParams) => {
+    const { user, mfaMethod, code } = params;
+    const response = await Auth.confirmSignIn(user, code, mfaMethod)
+    return response;
+}
+
+export { completeMFAChallenge, confirmUser, getCurrentAuthenticatedUser, getCurrentUserPreferredMfa, getTOTPSetupAuthorizationCode, logInUser, logOutUser, registerUser, setPreferredMFA, updateAmplifyUserAttributeParams, verifyTotpToken };
+
