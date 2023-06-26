@@ -7,7 +7,7 @@ import { mapErrorToErrorMessage } from "../utils/cognito";
 import { StatusLabel, Button } from "hds-react";
 import { ErrorMessage } from "@hookform/error-message";
 import { toast } from "sonner";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface Props {}
 
@@ -68,10 +68,10 @@ const ConfirmPage = ({}: Props) => {
   };
 
   return (
-    <div className="flex flex-col gap-4 w-full items-center">
+    <div className="flex flex-col items-center w-full gap-4">
       <h1 className="text-lg font-semibold">Confirm Account</h1>
       <form
-        className="max-w-md flex flex-col gap-4 w-full"
+        className="flex flex-col w-full max-w-md gap-4"
         onSubmit={handleSubmit(onSubmit)}
       >
         {fromRegistration && !isSubmitted && (
@@ -95,7 +95,7 @@ const ConfirmPage = ({}: Props) => {
               name="email"
               errors={errors}
               render={({ message }) => (
-                <span className="text-red-600 text-xs">{message}</span>
+                <span className="text-xs text-red-600">{message}</span>
               )}
             />
           </div>
@@ -108,7 +108,7 @@ const ConfirmPage = ({}: Props) => {
               name="code"
               errors={errors}
               render={({ message }) => (
-                <span className="text-red-600 text-xs">{message}</span>
+                <span className="text-xs text-red-600">{message}</span>
               )}
             />
           </div>

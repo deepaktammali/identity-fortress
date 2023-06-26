@@ -1,13 +1,10 @@
 import { MFA_METHOD } from "@/constants/amplify";
 import useSetPreferredMFAMutation from "@/hooks/use-set-preferred-mfa-mutation";
-import useUpdateUserAttributeMutation from "@/hooks/use-update-user-attribute-mutation";
 import { useAuthStore } from "@/stores/auth";
 import { Button } from "hds-react";
 import { useState } from "react";
-import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { Balancer } from "react-wrap-balancer";
-import { toast } from "sonner";
 import { twMerge } from "tailwind-merge";
 import PhoneNumberUpdate from "./PhoneNumberUpdate";
 
@@ -63,7 +60,7 @@ const SMSSetup = (props: Props) => {
       </div>
       {userAlreadyHasPhoneNumber && (
         <div className="flex flex-col gap-2">
-          <div className="flex gap-1 items-center flex-wrap">
+          <div className="flex flex-wrap items-center gap-1">
             <span className="whitespace-nowrap">You have</span>
             <span className="font-medium">{user!.attributes.phone_number}</span>
             <span className="whitespace-nowrap">
@@ -90,7 +87,7 @@ const SMSSetup = (props: Props) => {
           onCancel={() => setForceShowAddPhoneNumberInput(false)}
         />
       )}
-      <div className="flex w-full gap-2 justify-end sm:flex-row flex-col">
+      <div className="flex flex-col justify-end w-full gap-2 sm:flex-row">
         <Button variant="danger" onClick={handleCancel}>
           Cancel
         </Button>
