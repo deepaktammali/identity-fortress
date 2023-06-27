@@ -110,7 +110,7 @@ const ConfirmPage = ({}: Props) => {
               )}
             />
           </div>
-          <Button htmlType="submit" loading={isSubmitting}>
+          <Button htmlType="submit" type="success-light" loading={isSubmitting}>
             Confirm Account
           </Button>
         </div>
