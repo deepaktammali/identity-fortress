@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button, StatusLabel, Checkbox } from "hds-react";
+import { Note, Button, Checkbox } from "@geist-ui/core";
 import { ErrorMessage } from "@hookform/error-message";
 import { useCallback, useState } from "react";
 import { mapErrorToErrorMessage } from "../utils/cognito";
@@ -76,10 +76,10 @@ const AuthForm = ({ action }: Props) => {
 
   return (
     <form
-      className="max-w-md flex flex-col gap-4 w-full"
+      className="flex flex-col w-full max-w-md gap-4"
       onSubmit={handleSubmit(onSubmit)}
     >
-      {serverError && <StatusLabel type="error">{serverError}</StatusLabel>}
+      {serverError && <Note type="error">{serverError}</Note>}
       <div className="flex flex-col gap-2.5">
         <div className="flex flex-col gap-1">
           <label htmlFor="email" className="text-xs" placeholder="email">
@@ -95,7 +95,7 @@ const AuthForm = ({ action }: Props) => {
             name="email"
             errors={errors}
             render={({ message }) => (
-              <span className="text-red-600 text-xs">{message}</span>
+              <span className="text-xs text-red-600">{message}</span>
             )}
           />
         </div>
@@ -113,21 +113,19 @@ const AuthForm = ({ action }: Props) => {
             name="password"
             errors={errors}
             render={({ message }) => (
-              <span className="text-red-600 text-xs">{message}</span>
+              <span className="text-xs text-red-600">{message}</span>
             )}
           />
         </div>
         <Checkbox
           id="showPassword"
-          label="Show Password"
           checked={showPassword}
           onChange={toggleShowPassword}
-        />
-        <Button
-          type="submit"
-          isLoading={isSubmitting}
-          loadingText={action.label}
+          className="self-start"
         >
+          Show Password
+        </Checkbox>
+        <Button htmlType="submit" loading={isSubmitting} type="success-light">
           {action.label}
         </Button>
       </div>

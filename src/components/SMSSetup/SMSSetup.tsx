@@ -1,7 +1,7 @@
 import { MFA_METHOD } from "@/constants/amplify";
 import useSetPreferredMFAMutation from "@/hooks/use-set-preferred-mfa-mutation";
 import { useAuthStore } from "@/stores/auth";
-import { Button } from "hds-react";
+import { Button } from "@geist-ui/core";
 import { useState } from "react";
 import "react-phone-number-input/style.css";
 import { Balancer } from "react-wrap-balancer";
@@ -68,15 +68,15 @@ const SMSSetup = (props: Props) => {
             </span>
           </div>
           {!showAddPhoneNumberInput && (
-            <Button
-              size="small"
-              onClick={() => {
-                setForceShowAddPhoneNumberInput(true);
-              }}
-              className="w-max"
-            >
-              Update Phone Number
-            </Button>
+            <div className="w-max">
+              <Button
+                onClick={() => {
+                  setForceShowAddPhoneNumberInput(true);
+                }}
+              >
+                Update Phone Number
+              </Button>
+            </div>
           )}
         </div>
       )}
@@ -88,14 +88,13 @@ const SMSSetup = (props: Props) => {
         />
       )}
       <div className="flex flex-col justify-end w-full gap-2 sm:flex-row">
-        <Button variant="danger" onClick={handleCancel}>
+        <Button type="abort" onClick={handleCancel}>
           Cancel
         </Button>
         <Button
-          variant="success"
+          type="success-light"
           onClick={setSMSMFA}
-          isLoading={setUserPreferredMfaMutation.isLoading}
-          loadingText="Continue"
+          loading={setUserPreferredMfaMutation.isLoading}
         >
           Continue
         </Button>

@@ -1,9 +1,9 @@
-import { LoadingSpinner } from "hds-react";
+import { Spinner } from "@geist-ui/core";
 
 const PageLoader = () => {
   return (
-    <main className="flex flex-col justify-between items-center">
-      <LoadingSpinner />
+    <main className="flex flex-col items-center justify-between">
+      <Spinner />
     </main>
   );
 };

@@ -1,7 +1,7 @@
 import { MFA_METHOD } from "@/constants/amplify";
 import useDisableMFAMutation from "@/hooks/use-disable-mfa-mutation";
 import { useAuthStore } from "@/stores/auth";
-import { Button } from "hds-react";
+import { Button } from "@geist-ui/core";
 import TwoFactorDisabledContent from "./TwoFactorDisabledContent";
 import TwoFactorEnabledContent from "./TwoFactorEnabledContent";
 import { useNavigate } from "react-router-dom";
@@ -37,21 +37,13 @@ const TwoFactorSettings = () => {
         <h2 className="text-lg font-semibold">Two Factor Authentication</h2>
         {isMFAEnabled && (
           <div className="flex items-center gap-2">
-            <Button
-              type="button"
-              variant="primary"
-              size="small"
-              onClick={navigateToMFASetupPage}
-            >
+            <Button onClick={navigateToMFASetupPage} type="success-light">
               Edit
             </Button>
             <Button
-              type="button"
-              variant="danger"
-              size="small"
+              type="error-light"
               onClick={disableMFA}
-              isLoading={disableMFAMutation.isLoading}
-              loadingText="Disable"
+              loading={disableMFAMutation.isLoading}
             >
               Disable
             </Button>

@@ -3,7 +3,7 @@ import { PropsWithChildren, useState } from "react";
 import { NavLink, NavLinkProps } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 import { useAuthStore } from "../stores/auth";
-import { Button } from "hds-react";
+import { Button } from "@geist-ui/core";
 import { logOutUser } from "../utils/auth";
 
 // HeaderNavigationLink
@@ -83,21 +83,15 @@ const Header = (props: HeaderProps) => {
         clsx("flex justify-between w-full items-center", className)
       )}
     >
-      <span className="font-semibold sm:block hidden text-lg text-blue-700">
+      <span className="hidden text-lg font-semibold text-blue-700 sm:block">
         IdentityFortress
       </span>
-      <span className="font-semibold sm:hidden block text-lg text-blue-700">
+      <span className="block text-lg font-semibold text-blue-700 sm:hidden">
         IF
       </span>
       {!isAuthenticated && <HeaderPublicNav></HeaderPublicNav>}
       {isAuthenticated && (
-        <Button
-          size="small"
-          variant="secondary"
-          onClick={signOut}
-          isLoading={isSigningOut}
-          loadingText="Sign Out"
-        >
+        <Button ghost onClick={signOut} loading={isSigningOut}>
           Sign Out
         </Button>
       )}

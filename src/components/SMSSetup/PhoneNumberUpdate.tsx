@@ -1,5 +1,5 @@
 import useUpdateUserAttributeMutation from "@/hooks/use-update-user-attribute-mutation";
-import { Button } from "hds-react";
+import { Button } from "@geist-ui/core";
 import { useState } from "react";
 import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
 import { toast } from "sonner";
@@ -48,17 +48,16 @@ const PhoneNumberUpdate = (props: Props) => {
       ></PhoneInput>
       <div className="flex items-center gap-2">
         <Button
-          size="small"
           className="w-max"
-          isLoading={updateUserAttributesMutation.isLoading}
+          type="success-light"
+          loading={updateUserAttributesMutation.isLoading}
           disabled={!isValidPhoneNumber(userEnteredPhoneNumber)}
-          loadingText="Update Phone Number"
           onClick={updateUserPhoneNumber}
         >
           Update Phone Number
         </Button>
         {showCancel && (
-          <Button size="small" variant="secondary" onClick={onCancel}>
+          <Button type="abort" onClick={onCancel}>
             Cancel
           </Button>
         )}

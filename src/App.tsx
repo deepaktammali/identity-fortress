@@ -6,6 +6,7 @@ import PageLoader from "./components/PageLoader";
 import { config as amplifyAuthConfig } from "./config/amplify/auth";
 import { queryClient } from "./config/tanstack/query";
 import useAmplifyZustandBridge from "./hooks/use-amplify-zustand-bridge";
+import { GeistProvider } from "@geist-ui/core";
 
 Auth.configure(amplifyAuthConfig);
 
@@ -19,7 +20,9 @@ function App() {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <Outlet />
+        <GeistProvider>
+          <Outlet />
+        </GeistProvider>
         <Toaster richColors />
       </QueryClientProvider>
     </>

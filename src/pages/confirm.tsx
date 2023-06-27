@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
 import { confirmUser } from "../utils/auth";
 import { mapErrorToErrorMessage } from "../utils/cognito";
-import { StatusLabel, Button } from "hds-react";
+import { Note, Button } from "@geist-ui/core";
 import { ErrorMessage } from "@hookform/error-message";
 import { toast } from "sonner";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -75,11 +75,9 @@ const ConfirmPage = ({}: Props) => {
         onSubmit={handleSubmit(onSubmit)}
       >
         {fromRegistration && !isSubmitted && (
-          <StatusLabel type="info">
-            {`Please check ${registeredEmail} for code`}
-          </StatusLabel>
+          <Note type="default">{`Please check ${registeredEmail} for code`}</Note>
         )}
-        {serverError && <StatusLabel type="error">{serverError}</StatusLabel>}
+        {serverError && <Note type="error">{serverError}</Note>}
         <div className="flex flex-col gap-2.5">
           <div className="flex flex-col gap-1">
             <label htmlFor="email" className="text-xs" placeholder="email">
@@ -112,11 +110,7 @@ const ConfirmPage = ({}: Props) => {
               )}
             />
           </div>
-          <Button
-            type="submit"
-            isLoading={isSubmitting}
-            loadingText={"Confirm Account"}
-          >
+          <Button htmlType="submit" loading={isSubmitting}>
             Confirm Account
           </Button>
         </div>

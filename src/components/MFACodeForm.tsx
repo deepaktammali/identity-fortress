@@ -1,6 +1,6 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, StatusLabel } from "hds-react";
+import { Button, Note } from "@geist-ui/core";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -69,7 +69,7 @@ const MFACodeForm = ({ action, email, mfaMethod }: Props) => {
       className="flex flex-col w-full max-w-md gap-4"
       onSubmit={handleSubmit(onSubmit)}
     >
-      {serverError && <StatusLabel type="error">{serverError}</StatusLabel>}
+      {serverError && <Note type="error">{serverError}</Note>}
       <div className="flex flex-col gap-4">
         <div className="flex flex-col items-start gap-1 py-2">
           <span className="text-sm text-zinc-600">email:</span>
@@ -98,11 +98,7 @@ const MFACodeForm = ({ action, email, mfaMethod }: Props) => {
             )}
           />
         </div>
-        <Button
-          type="submit"
-          isLoading={isSubmitting}
-          loadingText={action.label}
-        >
+        <Button htmlType="submit" loading={isSubmitting} type="success-light">
           {action.label}
         </Button>
       </div>

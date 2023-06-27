@@ -4,7 +4,7 @@ import useSetupTOPTAuthCode from "@/hooks/use-setup-topt-auth-code-query";
 import useUpdateUserAttributeMutation from "@/hooks/use-update-user-attribute-mutation";
 import useVerifyTOTPAuthCodeMutation from "@/hooks/use-verify-totp-auth-code-mutation";
 import { useAuthStore } from "@/stores/auth";
-import { Button, LoadingSpinner, Notification } from "hds-react";
+import { Button, Spinner, Note } from "@geist-ui/core";
 import { QRCodeCanvas } from "qrcode.react";
 import { useState } from "react";
 import { Balancer } from "react-wrap-balancer";
@@ -102,11 +102,9 @@ const TOPTSetup = ({ className, onSuccess, onCancel }: Props) => {
         </span>
         <div>
           {/* Loading */}
-          {isAuthCodeLoading && <LoadingSpinner small />}
+          {isAuthCodeLoading && <Spinner />}
           {/* Error */}
-          {error !== null && (
-            <Notification type="error">Error loading QR code</Notification>
-          )}
+          {error !== null && <Note type="error">Error loading QR code</Note>}
           {code && (
             <div className="flex flex-col gap-4">
               <QRCodeCanvas value={qrCodeString} />
@@ -129,25 +127,24 @@ const TOPTSetup = ({ className, onSuccess, onCancel }: Props) => {
                 ></input>
               </div>
               {serverErrorMessage && (
-                <Notification type="error">{serverErrorMessage}</Notification>
+                <Note type="error">{serverErrorMessage}</Note>
               )}
             </div>
           )}
         </div>
       </div>
       <div className="flex justify-end w-full gap-2">
-        <Button variant="danger" onClick={handleCancel}>
+        <Button type="abort" onClick={handleCancel}>
           Cancel
         </Button>
         <Button
-          variant="success"
+          type="success-light"
           disabled={challengeAnswer === "" || challengeAnswer === undefined}
           onClick={setupTotp}
-          isLoading={
+          loading={
             verifyTOTPAuthCodeMutation.isLoading ||
             setUserPreferredMfaMutation.isLoading
           }
-          loadingText="Continue"
         >
           Continue
         </Button>

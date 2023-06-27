@@ -1,7 +1,7 @@
 import SMSSetup from "@/components/SMSSetup/SMSSetup";
 import TOPTSetup from "@/components/TOPTSetup";
 import { MFA_METHOD } from "@/constants/amplify";
-import { Button } from "hds-react";
+import { Button } from "@geist-ui/core";
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -68,7 +68,7 @@ const Setup = ({}: Props) => {
     <div className="flex flex-col gap-8">
       {/* Setup Element */}
       <div className="flex flex-col items-center">
-        <div className="max-w-6xl py-4 px-5 border border-gray-200 bg-gray-50">
+        <div className="max-w-6xl px-5 py-4 border border-gray-200 bg-gray-50">
           {SetupElement}
         </div>
       </div>
@@ -86,15 +86,13 @@ const Setup = ({}: Props) => {
             return (
               <li
                 key={mfaOption.slug}
-                className="flex justify-between sm:flex-row flex-col gap-2 sm:gap-1 w-full border border-gray-200 bg-gray-50 px-3 py-2"
+                className="flex flex-col justify-between w-full gap-2 px-3 py-2 border border-gray-200 sm:flex-row sm:gap-1 bg-gray-50"
               >
                 <div className="flex flex-col gap-1">
                   <span className="font-medium">{mfaOption.label}</span>
                   <span className="text-zinc-600">{mfaOption.description}</span>
                 </div>
                 <Button
-                  type="button"
-                  size="small"
                   onClick={() => {
                     setSelectedMFAOptionIdx(idx);
                   }}
