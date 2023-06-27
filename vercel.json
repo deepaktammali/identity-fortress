@@ -1,34 +1,8 @@
 {
-    "redirects": [
+    "rewrites": [
         {
-            "source": "/settings",
-            "destination": "/",
-            "statusCode": 200
-        },
-        {
-            "source": "/settings/authentication",
-            "destination": "/",
-            "statusCode": 200
-        },
-        {
-            "source": "/settings/two-factor/setup",
-            "destination": "/",
-            "statusCode": 200
-        },
-        {
-            "source": "/auth/login",
-            "destination": "/",
-            "statusCode": 200
-        },
-        {
-            "source": "/auth/register",
-            "destination": "/",
-            "statusCode": 200
-        },
-        {
-            "source": "/auth/confirm",
-            "destination": "/",
-            "statusCode": 200
+            "source": "/(.*)",
+            "destination": "/"
         }
     ]
 }
