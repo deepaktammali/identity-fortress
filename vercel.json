@@ -1,7 +1,32 @@
 {
     "redirects": [
         {
-            "source": "/*",
+            "source": "/settings",
+            "destination": "/index.html",
+            "statusCode": 200
+        },
+        {
+            "source": "/settings/authentication",
+            "destination": "/index.html",
+            "statusCode": 200
+        },
+        {
+            "source": "/settings/two-factor/setup",
+            "destination": "/index.html",
+            "statusCode": 200
+        },
+        {
+            "source": "/auth/login",
+            "destination": "/index.html",
+            "statusCode": 200
+        },
+        {
+            "source": "/auth/register",
+            "destination": "/index.html",
+            "statusCode": 200
+        },
+        {
+            "source": "/auth/confirm",
             "destination": "/index.html",
             "statusCode": 200
         }
